@@ -13,10 +13,10 @@ const enAlle = (p) => [p.en, ...(p.alt || [])].join(' / ');
 
 export default {
   id: 'gloser', fag: 'engelsk', navn: 'Engelske gloser', trinn: [1, 7],
-  felter: () => [
+  felter: (o) => [
     { id: 'tema', navn: 'Tema', valg: GLOSER.map((x) => [x.id, `${x.navn} (${x.engelsk})`]) },
     { id: 'type', navn: 'Oppgaver', valg: [['tilengelsk', 'Oversett til engelsk'], ['tilnorsk', 'Oversett til norsk'], ['koble', 'Koble ordene'], ['ordleting', 'Engelsk ordleting']] },
-    { id: 'antall', navn: 'Antall ord', valg: [['8', '8'], ['10', '10'], ['12', '12'], ['16', '16']] },
+    { id: 'antall', navn: 'Antall ord', valg: (o.type === 'koble' ? [8, 10, 12] : [8, 10, 12, 16]).map((x) => [String(x), String(x)]) },
   ],
   standard: (trinn) => ({ tema: 'dyr', type: 'tilengelsk', antall: trinn <= 2 ? '8' : trinn <= 4 ? '10' : '12' }),
 

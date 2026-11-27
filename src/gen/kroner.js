@@ -16,11 +16,11 @@ const TYPE = { 1: 'tell', 2: 'blandet', 3: 'blandet', 4: 'blandet', 5: 'blandet'
 
 export default {
   id: 'kroner', fag: 'matte', navn: 'Kroner og øre', trinn: [1, 7],
-  felter: () => [
+  felter: (o) => [
     { id: 'type', navn: 'Oppgaver', valg: [['blandet', 'Blandet for trinnet'], ['tell', 'Tell pengene'], ['handle', 'Handle'], ['veksle', 'Penger tilbake'], ['ore', 'Kroner og øre (gjør om)']] },
-    { id: 'antall', navn: 'Antall', valg: [['6', '6'], ['8', '8'], ['10', '10']] },
+    { id: 'antall', navn: 'Antall', valg: (o.type === 'tell' || (o.type === 'blandet' && o.trinn <= 2) ? [6, 8] : [6, 8, 10]).map((x) => [String(x), String(x)]) },
   ],
-  standard: (trinn) => ({ type: TYPE[trinn], antall: trinn <= 2 ? '10' : '8' }),
+  standard: (trinn) => ({ type: TYPE[trinn], antall: '8' }),
 
   lag(rng, o) {
     const tr = o.trinn, n = Number(o.antall);
@@ -37,7 +37,7 @@ export default {
     const lag = (type) => () => {
       if (type === 'tell') {
         const sett = MYNTER[Math.min(tr, 3)];
-        const k = rng.int(2, tr <= 1 ? 5 : 6);
+        const k = rng.int(2, tr <= 1 ? 5 : tr === 2 ? 6 : 5);
         const v = Array.from({ length: k }, () => rng.pick(sett)).sort((a, b) => b - a);
         const sum = v.reduce((a, b) => a + b, 0);
         if (sum * 100 > tak) return null;

@@ -8,7 +8,7 @@ export default {
   id: 'kryssord', fag: 'norsk', navn: 'Kryssord for barn', trinn: [1, 7],
   felter: () => [
     { id: 'tema', navn: 'Tema', valg: TEMAER.map((x) => [x.id, x.navn]) },
-    { id: 'antall', navn: 'Antall ord', valg: [['6', '6'], ['8', '8'], ['10', '10'], ['12', '12']] },
+    { id: 'antall', navn: 'Antall ord', valg: [['6', '6'], ['8', '8'], ['10', '10']] },
   ],
   standard: (trinn) => ({ tema: 'dyr', antall: trinn <= 2 ? '6' : trinn <= 4 ? '8' : '10' }),
 

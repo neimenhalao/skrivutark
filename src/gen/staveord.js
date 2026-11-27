@@ -25,7 +25,7 @@ export default {
   felter: (o) => [
     { id: 'gruppe', navn: 'Ordgruppe', valg: [['alle', 'Alle ordgruppene for trinnet'], ...grupperFor(o.trinn).map((g, i) => [String(i), g.regel])] },
     { id: 'type', navn: 'Oppgaver', valg: [['blandet', 'Blandet'], ['ove', 'Les – dekk til – skriv – sjekk'], ['mangler', 'Skriv bokstavene som mangler'], ['stokk', 'Stokkede bokstaver']] },
-    { id: 'antall', navn: 'Antall ord', valg: [['8', '8'], ['10', '10'], ['12', '12'], ['15', '15']] },
+    { id: 'antall', navn: 'Antall ord', valg: (o.type === 'stokk' ? [8, 10, 12] : [8, 10, 12, 15]).map((x) => [String(x), String(x)]) },
   ],
   standard: (trinn) => ({ gruppe: 'alle', type: 'blandet', antall: trinn <= 2 ? '10' : '12' }),
 

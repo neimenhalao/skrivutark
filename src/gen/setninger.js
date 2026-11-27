@@ -7,7 +7,7 @@ export default {
   id: 'setninger', fag: 'norsk', navn: 'Setninger', trinn: [1, 7],
   felter: () => [
     { id: 'type', navn: 'Oppgaver', valg: [['ordbank', 'Fullfør setningen (ordbank)'], ['ogaa', 'Og eller å?']] },
-    { id: 'antall', navn: 'Antall setninger', valg: [['8', '8'], ['10', '10'], ['12', '12'], ['15', '15']] },
+    { id: 'antall', navn: 'Antall setninger', valg: [['8', '8'], ['10', '10'], ['12', '12']] },
   ],
   standard: (trinn) => ({ type: 'ordbank', antall: trinn <= 2 ? '8' : '12' }),
 

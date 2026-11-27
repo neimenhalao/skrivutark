@@ -87,7 +87,7 @@ function mynt(v) {
   return s + '</svg>';
 }
 function seddel(v) {
-  let s = `<svg class="seddel" viewBox="0 0 84 44" width="118" height="62" role="img" aria-label="${v} kroner">`;
+  let s = `<svg class="seddel" viewBox="0 0 84 44" width="96" height="50" role="img" aria-label="${v} kroner">`;
   s += `<rect x="1" y="1" width="82" height="42" rx="3" fill="#fff" stroke="#000" stroke-width="1.6"/><rect x="5" y="5" width="74" height="34" rx="2" fill="none" stroke="#000" stroke-width="0.6" stroke-dasharray="3 2"/>`;
   s += `<text x="42" y="28" text-anchor="middle" font-size="16" font-weight="bold" font-family="Andika, sans-serif">${v}</text><text x="70" y="36" text-anchor="middle" font-size="7" font-family="Andika, sans-serif">kr</text>`;
   return s + '</svg>';

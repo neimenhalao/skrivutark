@@ -34,6 +34,8 @@ if (process.argv.includes('--alle')) {
 }
 
 const pdf = (url, fil, w) => new Promise((ok) => execFile(CHROME, ['--headless=new', '--disable-gpu', '--no-pdf-header-footer', `--user-data-dir=${path.join(ut, 'profil' + w)}`, `--print-to-pdf=${fil}`, url], () => ok()));
+const FILTER = process.env.FILTER ? new RegExp(process.env.FILTER) : null;
+if (FILTER) for (let i = jobber.length - 1; i >= 0; i--) if (!FILTER.test(jobber[i].navn)) jobber.splice(i, 1);
 const feil = [];
 const ko = jobber.flatMap((j, i) => ['ark', 'fasit'].map((hva) => ({ ...j, hva, fil: path.join(ut, `${i}-${hva}.pdf`) })));
 async function arbeider(_, w) {
