@@ -4,7 +4,7 @@ import TEMAER from './temaer.js';
 import SETNINGER from './setninger.js';
 import GLOSER from './gloser.js';
 
-const ordI = (tekst) => tekst.toLowerCase().replace(/___/g, ' ').match(/[a-zæøå]+/g) || [];
+const ordI = (tekst) => tekst.toLowerCase().replace(/___/g, ' ').match(/[a-zæøåéèêóòôü]+/g) || [];
 export function norskeOrd() {
   const ut = new Set();
   for (const grupper of Object.values(STAVEORD)) for (const g of grupper) g.ord.forEach((w) => ut.add(w));

@@ -52,7 +52,9 @@ for (const w of todo) {
 }
 await writeFile(CACHE, JSON.stringify(Object.fromEntries(Object.entries(cache).sort()), null, 0));
 
-const missing = words.filter((w) => cache[key(w)] === false);
+// Egennavn og s-genitiver som ordboka ikke har som egne former, men som er riktige
+const UNNTAK = new Set(['afrika', 'eidsvoll', 'norges', 'oslo', 'svalbard', 'dyrenes', 'familiens', 'nissens', 'skogens']);
+const missing = words.filter((w) => cache[key(w)] === false && !UNNTAK.has(w));
 const unknown = words.filter((w) => !(key(w) in cache));
 console.log(`Sjekket ${words.length} ord (${dict}). Ikke funnet: ${missing.length}. Ikke slått opp (nettfeil): ${unknown.length}.`);
 if (missing.length) console.log('IKKE FUNNET:\n' + missing.join('\n'));

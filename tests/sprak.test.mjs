@@ -180,3 +180,22 @@ test('gloser: ord med nesten lik betydning havner ikke på samme ark', async () 
     for (const g of SAMME) assert.ok(d.par.filter((p) => g.includes(p.no)).length <= 1, `${g.join('/')} på samme ark`);
   }
 });
+
+test('valg: normaliserte valg er alltid gyldige, og URL-parametre gir samme valg tilbake', async () => {
+  const { tilParametre, fraParametre } = await import('../src/ark.js');
+  for (const gen of Object.values(G)) for (let t = gen.trinn[0]; t <= gen.trinn[1]; t++) {
+    const base = normaliser(gen, { trinn: t });
+    for (const fe of felter(gen, base)) {
+      if (fe.multi) continue;
+      for (const [v] of fe.valg) for (const antall of ['1', '12', '999']) {
+        const o = normaliser(gen, { trinn: t, [fe.id]: v, antall });
+        for (const f2 of felter(gen, o)) {
+          if (f2.multi) { assert.ok(o[f2.id].length > 0); continue; }
+          assert.ok(f2.valg.some(([x]) => x === String(o[f2.id])), `${gen.id} ${f2.id}=${o[f2.id]}`);
+        }
+        const tilbake = fraParametre(gen, '?' + tilParametre(gen, o, 'ABC234'));
+        assert.deepEqual(tilbake.opts, o); assert.equal(tilbake.kode, 'ABC234');
+      }
+    }
+  }
+});

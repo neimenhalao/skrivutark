@@ -5,11 +5,11 @@ const TYPE = { 3: 'tabell', 4: 'tabell', 5: 'rest', 6: 'store', 7: 'storerest' }
 
 export default {
   id: 'divisjon', fag: 'matte', navn: 'Divisjon', trinn: [3, 7],
-  felter: () => [
+  felter: (o) => [
     { id: 'type', navn: 'Type', valg: [['tabell', 'Innenfor gangetabellen'], ['rest', 'Med rest (opp til 100)'], ['store', 'Store tall, går opp'], ['storerest', 'Store tall med rest']] },
-    { id: 'antall', navn: 'Antall', valg: [['15', '15'], ['20', '20'], ['24', '24'], ['30', '30'], ['40', '40']] },
+    { id: 'antall', navn: 'Antall', valg: (o.type === 'tabell' ? [15, 20, 30, 40] : [12, 16, 20, 24]).map((x) => [String(x), String(x)]) },
   ],
-  standard: (trinn) => ({ type: TYPE[trinn], antall: trinn <= 4 ? '30' : trinn === 5 ? '24' : '15' }),
+  standard: (trinn) => ({ type: TYPE[trinn], antall: trinn <= 4 ? '30' : trinn === 5 ? '20' : '16' }),
 
   lag(rng, o) {
     const n = Number(o.antall);

@@ -64,13 +64,15 @@ function start(el) {
       for (const k of ['tema', 'sprak']) if (opts[k]) behold[k] = opts[k];
       opts = normaliser(gen, { trinn: e.target.value, ...behold });
       tegn({ kontroller: true });
+      skjema.querySelector('[name="trinn"]')?.focus();
     } else {
       const raw = { ...opts };
       if (e.target.type === 'checkbox') raw[navn] = [...skjema.querySelectorAll(`input[name="${navn}"]:checked`)].map((x) => x.value);
       else raw[navn] = e.target.value;
       opts = normaliser(gen, raw);
-      if (e.target.type === 'checkbox' && !raw[navn].length) skjema.querySelector(`input[name="${navn}"][value="${opts[navn][0]}"]`).checked = true;
-      tegn();
+      tegn({ kontroller: true });
+      const fokus = e.target.type === 'checkbox' ? skjema.querySelector(`input[name="${navn}"][value="${e.target.value}"]`) : skjema.querySelector(`[name="${navn}"]`);
+      fokus?.focus();
     }
     oppdaterAdresse();
     hendelse('valg', gen.id);

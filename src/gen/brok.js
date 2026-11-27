@@ -132,7 +132,7 @@ export default {
   id: 'brok', fag: 'matte', navn: 'Brøk', trinn: [3, 7],
   felter: (o) => [
     { id: 'type', navn: 'Oppgaver', valg: TYPER.map(([v, n]) => [v, n || NAVN[v]]) },
-    { id: 'antall', navn: 'Antall', valg: [['12', '12'], ['16', '16'], ['20', '20'], ['24', '24']] },
+    { id: 'antall', navn: 'Antall', valg: (o.type === 'miks' ? [12, 16, 20] : [12, 16, 20, 24]).map((x) => [String(x), String(x)]) },
   ],
   standard: (trinn) => ({ type: 'miks', antall: trinn <= 4 ? '12' : '20' }),
 

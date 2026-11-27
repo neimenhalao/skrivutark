@@ -32,13 +32,24 @@ export function normaliser(gen, raw = {}) {
   if (!(trinn >= gen.trinn[0] && trinn <= gen.trinn[1])) trinn = Math.max(gen.trinn[0], Math.min(gen.trinn[1], 3));
   const o = { trinn, sprak: 'nb', ...gen.standard(trinn) };
   o.trinn = trinn;
-  for (const fe of felter(gen, o)) {
+  // to runder: noen felt (f.eks. antall) har valg som avhenger av andre felt (f.eks. type)
+  for (let runde = 0; runde < 2; runde++) for (const fe of felter(gen, o)) {
     if (fe.id === 'trinn' || !(fe.id in raw) || raw[fe.id] == null) continue;
     const lov = new Set(fe.valg.map((v) => v[0]));
     if (fe.multi) {
       const verdier = (Array.isArray(raw[fe.id]) ? raw[fe.id] : String(raw[fe.id]).split(',')).map(String).filter((v) => lov.has(v));
       if (verdier.length) o[fe.id] = [...new Set(verdier)].sort((a, b) => Number(a) - Number(b));
     } else if (lov.has(String(raw[fe.id]))) o[fe.id] = String(raw[fe.id]);
+  }
+  // Verdier som ikke finnes blant valgene (f.eks. antall etter bytte av type) → nærmeste gyldige
+  for (const fe of felter(gen, o)) {
+    if (fe.multi || fe.id === 'trinn') continue;
+    const lov = fe.valg.map((v) => v[0]);
+    if (lov.includes(String(o[fe.id]))) continue;
+    const tall = Number(o[fe.id]);
+    o[fe.id] = Number.isFinite(tall) && lov.every((v) => Number.isFinite(Number(v)))
+      ? lov.reduce((a, b) => (Math.abs(Number(b) - tall) < Math.abs(Number(a) - tall) ? b : a))
+      : lov[0];
   }
   if (gen.fag !== 'matte') delete o.sprak;
   return o;

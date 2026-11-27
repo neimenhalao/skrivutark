@@ -37,10 +37,10 @@ const TYPE = { 1: 'les', 2: 'blandet', 3: 'blandet', 4: 'blandet', 5: 'tid', 6: 
 
 export default {
   id: 'klokka', fag: 'matte', navn: 'Klokka', trinn: [1, 7],
-  felter: () => [
+  felter: (o) => [
     { id: 'type', navn: 'Oppgaver', valg: [['les', 'Les klokka'], ['tegn', 'Tegn viserne'], ['blandet', 'Les og tegn'], ['tid', 'Tidsregning (digital)']] },
     { id: 'niva', navn: 'Klokkeslett', valg: [['hel-halv', 'Hele og halve timer'], ['kvart', 'Også kvart over og kvart på'], ['fem', 'Hvert femte minutt'], ['minutt', 'Alle minutter']] },
-    { id: 'antall', navn: 'Antall', valg: [['6', '6'], ['9', '9'], ['12', '12']] },
+    { id: 'antall', navn: 'Antall', valg: (o.type === 'tid' ? [8, 10, 12] : [6, 9]).map((x) => [String(x), String(x)]) },
   ],
   standard: (trinn) => ({ type: TYPE[trinn], niva: NIVA[trinn], antall: TYPE[trinn] === 'tid' ? '12' : '9' }),
 

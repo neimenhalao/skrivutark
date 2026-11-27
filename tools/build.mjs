@@ -36,7 +36,7 @@ async function write(rel, html, { sitemap = true, prioritet = '0.6' } = {}) {
   await mkdir(path.dirname(f), { recursive: true });
   if (rel.endsWith('.html')) {
     if (BP) html = html.replace(/(href|src|action)="\/(?!\/)/g, `$1="${BP}/`);
-    if (sitemap) urls.push([rel.replace(/index\.html$/, '').replace(/^/, '/'), prioritet]);
+    if (sitemap) urls.push([('/' + rel.split(path.sep).join('/')).replace(/\/+/g, '/').replace(/index\.html$/, ''), prioritet]);
   }
   await writeFile(f, html);
 }

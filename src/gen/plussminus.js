@@ -15,12 +15,12 @@ const OMRADE = { 1: '10', 2: '20', 3: '100', 4: '1000', 5: '10000', 6: '10000', 
 
 export default {
   id: 'plussminus', fag: 'matte', navn: 'Pluss og minus', trinn: [1, 7],
-  felter: () => [
+  felter: (o) => [
     { id: 'omrade', navn: 'Tallområde', valg: [['10', '0–10'], ['20', '0–20'], ['100', '0–100'], ['1000', '0–1000'], ['10000', '0–10 000']] },
     { id: 'regning', navn: 'Regneart', valg: [['begge', 'Pluss og minus'], ['pluss', 'Bare pluss'], ['minus', 'Bare minus']] },
     { id: 'tierovergang', navn: 'Tierovergang', valg: [['blandet', 'Blandet'], ['uten', 'Uten tierovergang'], ['med', 'Med tierovergang']] },
     { id: 'oppsett', navn: 'Oppsett', valg: [['vannrett', 'Vannrett'], ['loddrett', 'Oppstilling']] },
-    { id: 'antall', navn: 'Antall', valg: [['15', '15'], ['20', '20'], ['30', '30'], ['40', '40']] },
+    { id: 'antall', navn: 'Antall', valg: (o.oppsett === 'loddrett' ? [10, 15, 20, 25] : [15, 20, 30, 40]).map((x) => [String(x), String(x)]) },
   ],
   standard: (trinn) => ({
     omrade: OMRADE[trinn], regning: 'begge', tierovergang: trinn === 2 ? 'med' : 'blandet',
