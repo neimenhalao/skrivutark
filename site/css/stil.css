@@ -301,3 +301,12 @@ h3 { font-size: 1.15rem; }
   body[data-skriv="fasit"] .fasitramme { display: block !important; }
   .ark-instruks, .gangetabell th, .gangetabell td.diag, .ordleting td.treff { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* Sesongsider: trinntabell */
+.tabellramme { overflow-x: auto; max-width: 760px; }
+.trinntabell { border-collapse: collapse; width: 100%; background: var(--kort); border: 1px solid var(--linje); border-radius: var(--radius); font-size: .95rem; }
+.trinntabell th, .trinntabell td { padding: 8px 10px; border-bottom: 1px solid var(--linje); text-align: left; white-space: nowrap; }
+.trinntabell thead th { color: var(--blekk); font-family: var(--skole); }
+.trinntabell tbody tr:last-child th, .trinntabell tbody tr:last-child td { border-bottom: 0; }
+.trinntabell td a { font-weight: 600; }
+.trinntabell td span { color: var(--dempet); }

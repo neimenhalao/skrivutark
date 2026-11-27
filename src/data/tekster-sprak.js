@@ -1351,4 +1351,64 @@ export default {
       { q: 'Kan jeg lage engelsk ordleting til jul?', a: 'Ja. Velg temaet jul, eller gå til siden med engelske juleord, som allerede er satt opp som ordleting.' },
     ],
   },
+  // ---------- SESONGSIDER ----------
+  '/juleoppgaver/': {
+    tittel: 'Juleoppgaver for barneskolen – gratis ark med fasit',
+    beskrivelse: 'Gratis juleoppgaver for 1.–7. trinn: ordleting, kryssord og engelske juleord med fasit. Velg trinn og skriv ut på A4, nye ark hver gang.',
+    h1: 'Juleoppgaver for 1.–7. trinn',
+    ingress: 'Ordleting, kryssord og engelske juleord, samlet på ett sted. Velg trinn i tabellen, så åpnes arket ferdig innstilt.',
+    avsnitt: [
+      {
+        h: 'Hva du finner her',
+        p: [
+          'Alle arkene bygger på den samme juleordlista, med ord som juletre, nisse, pepperkake, advent og julestjerne. Ordleting passer fra 1. trinn. Kryssordet har hint som må leses, og fungerer best fra 2. trinn. Det engelske arket er en ordleting med juleord på engelsk, som present, reindeer og gingerbread.',
+        ],
+      },
+      {
+        h: 'Ett ark per elev',
+        p: [
+          'Hver gang du trykker «Lag nytt ark», blir ordene og plasseringen nye. Da kan sidemannen ikke bare kopiere, og elever som blir fort ferdige, kan få et nytt ark med samme vanskegrad. Fasiten skrives ut på egen side og passer alltid til arket den hører til.',
+        ],
+      },
+      {
+        h: 'Til de siste skoledagene før jul',
+        p: [
+          'Desember har mange korte dager med juleverksted, gudstjeneste eller avslutning. Et par ark med juleord er greit å ha klart når planen endrer seg. Vil du blande inn litt matte, ligger gangetabellen og pluss og minus under Matte, og alle ark får plass på én A4-side.',
+        ],
+      },
+    ],
+    sporsmal: [
+      { q: 'Koster juleoppgavene noe?', a: 'Nei. Du kan lage og skrive ut så mange ark du vil, uten innlogging.' },
+      { q: 'Kan jeg lagre arket som PDF?', a: 'Ja. Velg «Lagre som PDF» i utskriftsvinduet, så får du arket og fasiten som egne filer.' },
+    ],
+  },
+  '/vinteroppgaver/': {
+    tittel: 'Vinteroppgaver for barneskolen – ordleting og kryssord med fasit',
+    beskrivelse: 'Gratis vinteroppgaver for 1.–7. trinn: ordleting og kryssord om vinter og engelske gloser om klær og vær. Med fasit, klare til utskrift på A4.',
+    h1: 'Vinteroppgaver for 1.–7. trinn',
+    ingress: 'Ark om snø, kulde og vinterklær til januar og februar. Velg trinn i tabellen, så åpnes arket ferdig innstilt.',
+    avsnitt: [
+      {
+        h: 'Norsk: ordleting og kryssord',
+        p: [
+          'Vinterlista har ord som kjelke, snømann, istapp, brøytebil og nordlys. De yngste får korte ord og et lite rutenett, mens de eldste får lengre ord, flere retninger og kryssordhint som krever litt mer lesing. Kryssordet passer fra 2. trinn.',
+        ],
+      },
+      {
+        h: 'Engelsk: klær og vær',
+        p: [
+          'Engelskarkene øver på ord elevene trenger når det er kaldt ute: scarf, mitten, boot, snow, ice og cold. Klærne passer fra 3. trinn, og været med årstidene fra 4. trinn. Du kan bytte oppgavetype på arket, for eksempel fra oversetting til ordleting.',
+        ],
+      },
+      {
+        h: 'Til innedager og vinterferien',
+        p: [
+          'Når det er for kaldt til å gå ut i friminuttet, er det fint å ha noen ark klare. Før vinterferien kan du skrive ut et lite hefte med ett norsk og ett engelsk ark per elev. Hvert ark har en arkkode, så du kan dele lenken med foreldre eller kolleger, og de får nøyaktig det samme arket.',
+        ],
+      },
+    ],
+    sporsmal: [
+      { q: 'Hvilket trinn passer arkene for?', a: 'Ordleting passer fra 1. trinn, kryssordet fra 2. trinn og engelskarkene fra 3. trinn. Velg trinn i tabellen øverst.' },
+    ],
+  },
 };

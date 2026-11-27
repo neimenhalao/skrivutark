@@ -85,3 +85,9 @@ export const gruppenavn = {
 };
 
 export const trinnsider = [1, 2, 3, 4, 5, 6, 7].map((t) => ({ slug: `/${t}-trinn/`, trinn: t, navn: `${t}. trinn` }));
+
+// Sesongsider: samler temaark og lenker hvert ark ferdig innstilt per trinn (ark: landingsside, kolonnenavn, fra–til trinn).
+export const temasider = [
+  { slug: '/juleoppgaver/', navn: 'Juleoppgaver', ark: [['/ordleting/jul/', 'Ordleting', [1, 7]], ['/kryssord-for-barn/jul/', 'Kryssord', [2, 7]], ['/engelske-gloser/jul/', 'Engelsk', [2, 7]]] },
+  { slug: '/vinteroppgaver/', navn: 'Vinteroppgaver', ark: [['/ordleting/vinter/', 'Ordleting', [1, 7]], ['/kryssord-for-barn/vinter/', 'Kryssord', [2, 7]], ['/engelske-gloser/klaer/', 'Engelsk: klær', [3, 7]], ['/engelske-gloser/vaer/', 'Engelsk: været', [4, 7]]] },
+];

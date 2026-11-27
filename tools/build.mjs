@@ -3,7 +3,7 @@
 import { readFile, writeFile, mkdir, cp, rm, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { GENERATORER, FAGNAVN, normaliser, arkHTML, kontrollerHTML, tilParametre } from '../src/ark.js';
-import { sider, fag, gruppenavn, trinnsider } from '../src/sider.js';
+import { sider, fag, gruppenavn, trinnsider, temasider } from '../src/sider.js';
 import { kodeFra } from '../src/lib/rng.js';
 import { esc } from '../src/lib/fmt.js';
 import TM from '../src/data/tekster-matte.js';
@@ -200,6 +200,7 @@ for (const ts of trinnsider) {
 <div class="indre side">
 <section class="fagrad">${fagKort}</section>
 <section class="trinnvalg" id="trinn"><h2>Velg trinn</h2><div class="trinnknapper">${trinnsider.map((t) => `<a href="${t.slug}"><b>${t.trinn}.</b> trinn</a>`).join('')}</div></section>
+<section class="relatert"><h2>I sesong nå</h2><div class="kortrad">${temasider.map((x) => kort(x, TEKST[x.slug].h1)).join('')}</div></section>
 <section class="relatert"><h2>Mye brukt</h2><div class="kortrad">${populaere.map((x) => kort(x, TEKST[x.slug].h1)).join('')}</div></section>
 <article class="tekst forsidetekst">
 <section><h2>Slik fungerer Skrivutark</h2><p>Hvert ark lages av en generator i det øyeblikket du trykker. Mattestykkene regnes ut av programmet, og ordoppgavene bygges av egne ordlister som er kontrollert mot Bokmålsordboka. Derfor kan du lage så mange ark du vil, og fasiten stemmer alltid med arket.</p><p>Hvert ark har en arkkode nederst. Lenken til arket inneholder koden, så en kollega eller forelder som åpner lenken, får nøyaktig de samme oppgavene. Trykk «Lag nytt ark» for nye oppgaver med samme vanskegrad.</p></section>
@@ -208,6 +209,23 @@ for (const ts of trinnsider) {
 </div>`;
   const ld = [{ '@context': 'https://schema.org', '@type': 'WebSite', name: NAVN, url: BASE + '/', inLanguage: 'nb', description: 'Gratis generator for oppgaveark med fasit for barneskolen.' }];
   await write('index.html', layout({ title: 'Skrivutark – gratis oppgaveark med fasit for 1.–7. trinn', description: 'Lag gratis oppgaveark med fasit i matte, norsk og engelsk for 1.–7. trinn. Nye ark hver gang, klare til utskrift på A4. Ingen innlogging.', canonical: '/', body, ld }), { prioritet: '1.0' });
+}
+
+// ---------- sesongsider (juleoppgaver, vinteroppgaver) ----------
+for (const ts of temasider) {
+  const t = TEKST[ts.slug];
+  const sm = [['Forside', '/'], [ts.navn, ts.slug]];
+  const ark = ts.ark.map(([slug, kol, fraTil]) => ({ s: sider.find((x) => x.slug === slug), kol, fraTil }));
+  const lenke = (a, tr) => {
+    const gen = GENERATORER[a.s.gen];
+    return `${a.s.slug}?${tilParametre(gen, normaliser(gen, { ...a.s.opts, trinn: tr }))}`;
+  };
+  const rader = [1, 2, 3, 4, 5, 6, 7].map((tr) => `<tr><th scope="row">${tr}. trinn</th>${ark.map((a) => `<td>${tr >= a.fraTil[0] && tr <= a.fraTil[1] ? `<a href="${esc(lenke(a, tr))}">${esc(a.kol)}</a>` : '<span aria-label="Ikke anbefalt">–</span>'}</td>`).join('')}</tr>`).join('');
+  const tabell = `<section class="gruppe"><h2>Velg trinn</h2><p>Hver lenke åpner arket ferdig innstilt for trinnet. Trykk «Lag nytt ark» for flere ulike ark.</p><div class="tabellramme"><table class="trinntabell"><thead><tr><th scope="col">Trinn</th>${ark.map((a) => `<th scope="col">${esc(a.kol)}</th>`).join('')}</tr></thead><tbody>${rader}</tbody></table></div></section>`;
+  const kortene = `<section class="gruppe"><h2>Arkene</h2><div class="kortrad">${ark.map((a) => kort(a.s, TEKST[a.s.slug]?.h1)).join('')}</div></section>`;
+  const andre = temasider.filter((x) => x.slug !== ts.slug).map((x) => kort(x)).join('');
+  const body = `<div class="indre side">${smuleHTML(sm)}<header class="sidetopp"><h1>${esc(t.h1)}</h1><p class="ingress">${esc(t.ingress)}</p></header>${tabell}${kortene}<article class="tekst">${tekstHTML(t)}</article><section class="relatert"><h2>Flere sesongark</h2><div class="kortrad">${andre}</div></section></div>`;
+  await write(path.join(ts.slug, 'index.html'), layout({ title: `${t.tittel} | ${NAVN}`, description: t.beskrivelse, canonical: ts.slug, body, ld: [smuler(sm), ...faqLd(t)] }), { prioritet: '0.8' });
 }
 
 // ---------- om og personvern ----------
