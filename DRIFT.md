@@ -13,7 +13,7 @@ Brukes av COO-ens daglige økt og av team som jobber med Skrivutark. Hold dokume
 - **Kode:** `C:\Users\DanErikLinde\OneDrive - AREALUTVIKLING AS\Dokumenter\Claude code\skrivutark`, repo `neimenhalao/skrivutark` (offentlig), gren `main`.
 - **Nettsted nå:** https://neimenhalao.github.io/skrivutark/ (NOINDEX, robots.txt blokkerer alt). Eget domene: `skrivutark.no` når det er kjøpt.
 - **Hosting:** GitHub Pages via Actions (`.github/workflows/deploy.yml`). Ved hver push til `main`: fasit-testene kjøres først – feiler en test, publiseres ingenting. Så bygg og publisering. IndexNow kjøres bare når `SITE_DOMAIN` er satt og `NOINDEX` ikke er `1`.
-- **Repo-variabler:** `NOINDEX=1` (satt). `SITE_DOMAIN` er ikke satt (GitHub tillater ikke tomme variabler; «ikke satt» betyr github.io-adressen med stien `/skrivutark`). `GOATCOUNTER` er ikke satt ennå. `BASE_PATH` trengs ikke.
+- **Repo-variabler:** `NOINDEX=1` (satt). `SITE_DOMAIN` er ikke satt (GitHub tillater ikke tomme variabler; «ikke satt» betyr github.io-adressen med stien `/skrivutark`). `GOATCOUNTER=skrivutark` (satt 2026-11-27; endring av variabler krever nytt bygg). `BASE_PATH` trengs ikke.
 - **Statistikk:** GoatCounter (uten cookies) når eieren har laget `skrivutark.goatcounter.com`. Hendelser: `hendelse-nytt-ark/<generator>`, `hendelse-skriv-ark/…`, `hendelse-skriv-fasit/…`, `hendelse-del/…`, `hendelse-valg/…`.
 - **IndexNow-nøkkel:** `site/de339c0fa08ebd8cc37da7baa96664b1.txt`.
 - **Lokal forhåndsvisning:** `npm run build` og `npm run serve` → http://localhost:4340/skrivutark/ (preview-navn «skrivutark» i `Claude code/.claude/launch.json`).
@@ -61,7 +61,9 @@ Kort runde som COO-ens daglige økt kan følge. Maks 1–2 vekstpunkter per dag;
 
 ## Status
 - **2026-11-27: MVP LIVE på https://neimenhalao.github.io/skrivutark/ (NOINDEX).** 12 generatorer, 97 sider: 84 landingssider med forhåndsvist ark og egen tekst (matte 39, norsk 31, engelsk 14, inkl. oversiktssider), fagsidene matte/norsk/engelsk, sju trinnsider, forside, om og personvern. Ordlister: 692 staveord (1.–7. trinn), 638 temaord med kryssordhint (20 temaer), 180 ordbanksetninger + 100 og/å-setninger, 554 gloser (18 temaer). Alle norske ord sjekket mot Bokmålsordboka. 19 fasit-tester grønne. Testet på mobil (375 px), desktop og utskrift (PDF: alle 532 kombinasjoner av generator × trinn × type med største antall, og alle 84 landingssider, gir én A4-side per ark og fasit). Læreplanhenvisninger følger læreplanene som gjelder fra 1.8.2026 (MAT01-06, NOR01-08, ENG01-06).
-- **Venter på eieren:** kjøp av `skrivutark.no`, DNS, GoatCounter-konto, Search Console-bekreftelse (se «Lansering på eget domene»).
+- **2026-11-27 (daglig økt):** sesongsidene `/juleoppgaver/` og `/vinteroppgaver/` (trinntabell med ferdig innstilte ark, lenket fra forsiden) – 99 sider. `GOATCOUNTER=skrivutark` er satt; nytt bygg med skriptet publisert samme dag. Rapport: `rapporter/2026-11-27.md`.
+- **Domene:** `skrivutark.no` er kjøpt og delegert til Domeneshops navnetjenere, men A peker fortsatt til parkeringssiden 151.249.121.9 (DNS-sonen er ikke satt opp ennå; COO håndterer). Start «Lansering på eget domene» først når A svarer 185.199.x.153.
+- **Venter på:** DNS-oppføringer, Search Console-bekreftelse (se «Lansering på eget domene»).
 
 ## Sesongkalender 2027 (publiser innhold 6–8 uker før toppen)
 | Topp | Når | Innhold som bør være klart | Frist |
@@ -80,7 +82,7 @@ Kort runde som COO-ens daglige økt kan følge. Maks 1–2 vekstpunkter per dag;
 2. **Blandet matteark per trinn** («matteark 3. trinn»): én generator som setter sammen 3–4 temaer for trinnet på ett ark. Treffer de største søkene og trinnsidene.
 3. **Lesetekster med spørsmål** (konsept fra research): egne, faktasjekkede tekster per lesenivå (LIX), 20 i første omgang (dyr, årstider, Norge, høytider), med spørsmål og fasit. Egen gjennomlesing per tekst. Store søk: «lesetekster 3. trinn», «leseforståelse oppgaver».
 4. **Flere landingssider der det finnes søk:** ordleting for resten av temaene (dyr finnes som hovedside; klær, været, yrker, sport, trafikk, bondegården, hjemme), kryssord for flere temaer, engelske gloser for resten av temaene, «hoderegning», «gangetabell 2-gangen … 10-gangen» (bare hvis søkedata viser volum). Hver side skal ha egen tekst.
-5. **Vinterferie- og påskehefter** (se sesongkalenderen).
+5. **Vinterferie- og påskehefter** (se sesongkalenderen). Sesongsidene `/juleoppgaver/` og `/vinteroppgaver/` finnes (2026-11-27) – lag `/paskeoppgaver/` og `/17-mai-oppgaver/` på samme måte (legg til i `temasider` i `src/sider.js` + tekst), og vurder et engelsk glosetema «Vinter» og «nytt år»-ark før 15.12.
 6. **QR-kode på fasitarket** som lenker til arket (lærer kan skanne og vise fasit på tavla). Lages uten tredjepart.
 7. **Nynorsk ordlister** for staveord og temaord (Nynorskordboka via `ordsjekk.mjs --nn`), og nynorsk på alle arktekster.
 8. **Egne ordlister:** læreren limer inn ukens ord → staveark, ordleting og kryssord (uten lagring på server). Kandidat for premium senere.
