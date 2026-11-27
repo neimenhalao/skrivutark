@@ -1,0 +1,60 @@
+name: Test, bygg og publiser
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test at alle fasiter stemmer
+        run: node --test tests/*.test.mjs
+      - name: Bygg
+        run: node tools/build.mjs
+        env:
+          SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
+          BASE_PATH: ${{ vars.BASE_PATH }}
+          NOINDEX: ${{ vars.NOINDEX }}
+          GOATCOUNTER: ${{ vars.GOATCOUNTER }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  indexnow:
+    needs: deploy
+    if: ${{ vars.NOINDEX != '1' && vars.SITE_DOMAIN != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Meld sidene til søkemotorer (IndexNow)
+        run: node tools/build.mjs && node tools/indexnow.mjs
+        env:
+          SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
